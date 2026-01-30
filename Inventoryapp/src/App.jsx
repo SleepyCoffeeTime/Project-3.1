@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Inventory from './pages/Inventory';
-import ItemDetails from './pages/ItemDetails';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Inventory from './components/MyInventoryPage';
+import ItemDetails from './components/ItemDetails';
 import './App.css';
 
 function App() {
