@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:15
+    container_name: inventoryapp-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: zprefix
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: inventoryapp-api
+    environment:
+      DATABASE_URL: postgresql://postgres:docker@db:5432/zprefix
+      NODE_ENV: development
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    command: npm start
+
+volumes:
+  postgres_data:
