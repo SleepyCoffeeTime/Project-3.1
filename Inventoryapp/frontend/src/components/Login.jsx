@@ -2,63 +2,55 @@ import React, { useState } from 'react';
 import { login } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login({ onLogin }) {
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const logIn = async (event) => {
-    event.preventDefault();
-    setError('');
-    
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    console.log('Attempting login with:', username);
     try {
+      console.log('Calling login API...');
       const response = await login(username, password);
-      const userData = response.data;
-      
-
-      onLogin(userData);
-     
-      navigate('/my-inventory');
-    } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
-      console.error('Login error:', err);
+      console.log('Login response:', response);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      navigate('/inventory');
+    } catch (error) {
+      console.error('Full error:', error);
+      console.error('Error response:', error.response);
+      alert('Login failed: ' + error.message);
     }
   };
 
-  const logInAsVisitor = (event) => {
-    event.preventDefault();
- 
-    navigate('/');
+  const handleVisitor = () => {
+    navigate('/items');
   };
 
   return (
     <div>
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <form onSubmit={handleLogin}>
+        <input 
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)} 
+          placeholder="Username" 
+          required 
+        />
+        <input 
+          type="password" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          placeholder="Password" 
+          required 
+        />
+        <button type="submit">Log In</button>
+      </form>
       
-      <input 
-        type="text" 
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Enter your username" 
-      />
-      
-      <input 
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter your password"
-      />
-     
-      <button onClick={logIn}>
-        Log In
-      </button>
-     
       <p>Don't want to log in?</p>
-      <button onClick={logInAsVisitor}>
-        Login as visitor
-      </button>
+      <button onClick={handleVisitor}>Login as visitor</button>
+      
+      <p>Don't have an account? <a href="/signup">Sign up</a></p>
     </div>
   );
 }

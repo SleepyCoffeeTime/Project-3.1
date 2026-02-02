@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { getAllItems } from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
-export default function ItemsPage() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-
+export default function ItemCard({ item }) {
+  return (
+  <div className="item-card">
+      <h3>{item.name}</h3>
+      <p>{item.description}</p>
+      <p>Quantity: {item.quantity}</p>
+      <p>Owner: {item.owner}</p>
+    </div>
+  );
 }

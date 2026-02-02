@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080';
@@ -10,7 +9,6 @@ const api = axios.create({
   },
   withCredentials: true
 });
-
 
 export const register = (username, password) => {
   return api.post('/api/register', { username, password });
