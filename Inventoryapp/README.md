@@ -1,16 +1,47 @@
-# React + Vite
+Welcome to the Inventory Management System!
+This digital inventory application is designed to help inventory managers keep track of their current inventories and features all CRUD capabilities to Create, Read, Update, and Delete inventory entries. Additionally, it allows visitors to see all current inventory items from all inventory managers.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Setting the application up:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application relies on Docker to containerize the database, Node.js, Express, bcrypt, PostgreSQL, and Knex for the backend, as well as JavaScript, React, and Vite for the frontend.
 
-## React Compiler
+In order to run the application after cloning and forking from the GitHub repository, do the following:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Start Docker Desktop
+Make sure Docker Desktop is running on your computer.
 
-## Expanding the ESLint configuration
+### 2. Navigate to the project folder
+```
+cd Inventoryapp
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Start the backend (API & Database)
+```
+
+docker-compose up -d
+
+docker-compose exec api npx knex migrate:latest
+
+docker-compose exec api npx knex seed:run
+```
+
+### 4. Start the frontend
+```
+cd frontend
+npm install
+npm run dev
+```
+
+## Access the Application
+
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8080
+
+## Demo Credentials
+
+- Username: demo
+- Password: password123
+
+
+Enjoy! 
